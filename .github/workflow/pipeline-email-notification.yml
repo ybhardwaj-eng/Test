@@ -1,0 +1,27 @@
+name: Instrument Demo Flow Github Action
+
+run-name: Instrument Demo Flow Github Action in NR
+on:
+  workflow_run:
+    workflows: ['*']
+    types: [completed]
+
+
+env:
+  environment: ${{'sandbox'}}
+  GHA_TOKEN: ${{ secrets.GITHUBTOKEN }}
+  NEW_RELIC_LICENSE_KEY: ${{ secrets.NR_LICENSE_KEY_DEMO_LOCAL }}
+  GHA_RUN_ID: ${{ github.event.workflow_run.id }}
+  GHA_RUN_NAME: ${{ github.event.workflow_run.name }}
+
+jobs:
+  new-relic-exporter:
+    name: new-relic-exporter
+    runs-on: ubuntu-latest
+    environment: ${{'sandbox'}}
+    if: ${{ always() }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: new-relic-exporter
+        uses: newrelic-experimental/gha-new-relic-exporter@1.0.1
