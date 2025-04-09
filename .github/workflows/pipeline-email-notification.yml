@@ -1,6 +1,7 @@
 name: Instrument Demo Flow Github Action
 
-run-name: Instrument Demo Flow Github Action in NR
+run-name: Instrument Demo Flow Github Action ${{ github.event.workflow_run.name }} in NR
+
 on:
   workflow_run:
     workflows: ['*']
